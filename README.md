@@ -1,2 +1,2 @@
 # BeagleBonePractice
-A repository for the code written to practince embedded Linux on the BeagleBone Black
+A repository for the code written to practice embedded Linux on the BeagleBone Black
