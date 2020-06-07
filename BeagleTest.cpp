@@ -11,6 +11,9 @@
 #include<unistd.h> //for usleep
 
 #include "GPIO.h"
+#include "ADXL345.h"
+
+#include "I2CDevice.h"
 using namespace std;
 using namespace exploringBB;
 
@@ -27,14 +30,23 @@ int readAnalog(int number){
    return number;
 }
 
-int main() {
-	cout << "GPIO Test Code" << endl;
+void testADXL()
+{
+	cout << "beginning ADXL Test" << endl;
+	ADXL345 sensor(2,0x53);
+	sensor.setResolution(ADXL345::NORMAL);
+	sensor.setRange(ADXL345::PLUSMINUS_4_G);
+//	sensor.readSensorState();
+	sensor.displayPitchAndRoll();
+	cout <<"end ADCXL test" << endl;
+}
 
-
-   GPIO outGPIO1(60), outGPIO2(48), outGPIO3(49), outGPIO4(20);
+void testGPIOout()
+{
+	GPIO outGPIO1(60), outGPIO2(48), outGPIO3(49), outGPIO4(20);
    int analog0;
-   // Basic Output - Flash the LED 10 times, once per second
-   outGPIO1.setDirection(OUTPUT);
+   cout << "GPIO Test Code" << endl;
+	outGPIO1.setDirection(OUTPUT);
    outGPIO2.setDirection(OUTPUT);
    outGPIO3.setDirection(OUTPUT);
    outGPIO4.setDirection(OUTPUT);
@@ -61,16 +73,22 @@ int main() {
 	  {
 		  outGPIO4.setValue(HIGH);
 	  }
-
-
-
-	  //cout << "Analog Output: " << analog0 << endl;
-
-	  usleep(50);
+	usleep(50);
 
    }
 
-   cout << "End GPIO Test Code" << endl;
+	  //cout << "Analog Output: " << analog0 << endl;
 
+	cout << "End GPIO Test Code" << endl;
+
+}
+
+
+
+int main() {
+	cout << "Test BeagleBone Black Capabilities" << endl;
+	//testGPIOout();
+	testADXL();
+	cout << "End Test" << endl;
 	return 0;
 }
